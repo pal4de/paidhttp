@@ -8,16 +8,25 @@ contract PaidHTTP is Ownable {
     mapping (string => uint256) public feesList;
     mapping (address => string) internal ticketsList;
 
+    function strToHash(string memory str) internal pure returns (bytes32) {
+        return keccak256(abi.encodePacked(str));
+    }
+
+    function getTicketHash(address visitor) internal view returns (bytes32) {
+        return strToHash(ticketsList[visitor]);
+    }
+
     function pay(string memory url) public payable {
         require(msg.value == getFee(url));
         require(
-            keccak256(abi.encodePacked(ticketsList[msg.sender])) != keccak256(""),
+            getTicketHash(msg.sender) != keccak256(""),
             "You have not visited the page you paid for."
         );
         ticketsList[msg.sender] = url;
     }
 
-    function punchTicket(address visitor) public onlyOwner {
+    function punchTicket(address visitor, string memory url) public onlyOwner {
+        require(getTicketHash(visitor) == strToHash(url));
         ticketsList[visitor] = "";
     }
 
@@ -25,7 +34,7 @@ contract PaidHTTP is Ownable {
         feesList[url] = amount;
     }
 
-    function getFee(string memory url) public view returns (uint256 fee) {
+    function getFee(string memory url) public view returns (uint256) {
         return feesList[url];
     }
 
