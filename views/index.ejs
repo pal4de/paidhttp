@@ -5,15 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PaidHTTP</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <script src="payment.js"></script>
 </head>
 <body>
     <h1>PaidHTTP test</h1>
     <% if (paid) { %>
-        <h2>thanks a lot</h2>
+        <p>thanks a lot</p>
         <p><img src="cat.jpg" alt="cat"></p>
     <% } else { %>
         <h2>402: Payment Required</h2>
-        <p>To view this page, you need to <a href="#">pay a fee in Ether</a>.</p>
+        <p>To view this page, you need to <a onclick="paymentHandler()" href="#">pay a fee in Ether</a>.</p>
     <% } %>
 </body>
 </html>

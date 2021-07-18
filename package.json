@@ -4,18 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:solidity": "npx truffle migrate --reset && npx typechain --target web3-v1 ./build/contracts/PaidHTTP.json"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@openzeppelin/contracts": "^4.2.0",
+    "cookie-parser": "^1.4.5",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "web3": "^1.4.0"
   },
   "devDependencies": {
     "@typechain/web3-v1": "^3.0.0",
+    "@types/cookie-parser": "^1.4.2",
     "@types/express": "^4.17.13",
     "@types/node": "^16.3.3",
     "ganache-cli": "^6.12.2",

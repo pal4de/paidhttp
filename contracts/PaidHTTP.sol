@@ -12,30 +12,38 @@ contract PaidHTTP is Ownable {
         return keccak256(abi.encodePacked(str));
     }
 
-    function getTicketHash(address visitor) internal view returns (bytes32) {
-        return strToHash(ticketsList[visitor]);
+    function isStringEmpty(string memory str) internal pure returns (bool) {
+        return bytes(str).length == 0;
     }
 
-    function pay(string memory url) public payable {
-        require(msg.value == getFee(url));
+    function pay(string memory path) public payable {
+        require(msg.value == getFee(path));
         require(
-            getTicketHash(msg.sender) != keccak256(""),
+            isStringEmpty(ticketsList[msg.sender]),
             "You have not visited the page you paid for."
         );
-        ticketsList[msg.sender] = url;
+        ticketsList[msg.sender] = path;
     }
 
-    function punchTicket(address visitor, string memory url) public onlyOwner {
-        require(getTicketHash(visitor) == strToHash(url));
+    function checkTicket(address visitor, string memory path) public view onlyOwner returns (bool) {
+        return strToHash(ticketsList[visitor]) == strToHash(path);
+    }
+
+    function punchTicket(address visitor, string memory path) public onlyOwner {
+        require(checkTicket(visitor, path));
         ticketsList[visitor] = "";
     }
 
-    function setFee(string memory url, uint256 amount) public onlyOwner {
-        feesList[url] = amount;
+    function getTicket(address visitor) public view onlyOwner returns (string memory) {
+        return ticketsList[visitor];
     }
 
-    function getFee(string memory url) public view returns (uint256) {
-        return feesList[url];
+    function setFee(string memory path, uint256 amount) public onlyOwner {
+        feesList[path] = amount;
+    }
+
+    function getFee(string memory path) public view returns (uint256) {
+        return feesList[path];
     }
 
     function withdraw() external onlyOwner {
