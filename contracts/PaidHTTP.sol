@@ -5,33 +5,28 @@ pragma solidity >=0.7.0 <0.9.0;
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract PaidHTTP is Ownable {
-    mapping (string => uint256) public feeList;
+    mapping (string => uint256) public feesList;
+    mapping (address => string) internal ticketsList;
 
-    mapping (address => string) internal invoiceList;
-
-    event Paid(address requester);
-
-    function newInvoice(address visiter, string memory url) public onlyOwner {
-        invoiceList[visiter] = url;
+    function pay(string memory url) public payable {
+        require(msg.value == getFee(url));
+        require(
+            keccak256(abi.encodePacked(ticketsList[msg.sender])) != keccak256(""),
+            "You have not visited the page you paid for."
+        );
+        ticketsList[msg.sender] = url;
     }
 
-    function getMyInvoice() public view returns (string memory url, uint256 fee) {
-        url = invoiceList[msg.sender];
-        return (url, getFee(url));
-    }
-
-    function pay() public payable {
-        require(msg.value == getFee(invoiceList[msg.sender]));
-        emit Paid(msg.sender);
-        newInvoice(msg.sender, ""); // clear invoice
+    function punchTicket(address visitor) public onlyOwner {
+        ticketsList[visitor] = "";
     }
 
     function setFee(string memory url, uint256 amount) public onlyOwner {
-        feeList[url] = amount;
+        feesList[url] = amount;
     }
 
     function getFee(string memory url) public view returns (uint256 fee) {
-        return feeList[url];
+        return feesList[url];
     }
 
     function withdraw() external onlyOwner {
