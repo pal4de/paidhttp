@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="js">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PaidHTTP</title>
+</head>
+<body>
+    <h1>PaidHTTP test</h1>
+    <% if (paid) { %>
+        <h2>thanks a lot</h2>
+        <p><img src="cat.jpg" alt="cat"></p>
+    <% } else { %>
+        <h2>402: Payment Required</h2>
+        <p>To view this page, you need to <a href="#">pay a fee in Ether</a>.</p>
+    <% } %>
+</body>
+</html>
