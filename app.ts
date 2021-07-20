@@ -11,8 +11,8 @@ app.use(cookieParser());
 
 const provider = 'http://127.0.0.1:8545';
 const contractInfo = require('./build/contracts/PaidHTTP.json')
-const contractAddr = '0x9AaC81401acA4Dd5D07D7Ca4223C019204853c73';
-const ownerAddr = '0x93074Ec6AB154eE02Ec294FD3aADd291789d3796';
+const contractAddr = '0xa430eE8Ab73FdbAD40Ef2E3CdD8aEc22480Fa90D';
+const ownerAddr = '0x374FB850aE93eF9aFE6827547a232c31593A458c';
 
 const web3 = new Web3(new Web3.providers.HttpProvider(provider));
 const abi = contractInfo.abi as AbiItem;

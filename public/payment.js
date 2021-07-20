@@ -12,7 +12,7 @@ const paymentHandler = async () => {
     const contractInfoRes = await fetch('/contract.json');
     const contractInfo = await contractInfoRes.json();
     const abi = contractInfo.abi;
-    const contractAddr = '0x9AaC81401acA4Dd5D07D7Ca4223C019204853c73';
+    const contractAddr = '0xa430eE8Ab73FdbAD40Ef2E3CdD8aEc22480Fa90D';
     const contract = new web3.eth.Contract(abi, contractAddr);
 
     const path = location.pathname;
