@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build:solidity": "npx truffle migrate --reset && npx typechain --target web3-v1 ./build/contracts/PaidHTTP.json"
+    "build:solidity": "npx truffle migrate --reset && npx typechain --target web3-v1 ./build/contracts/PaidHTTP.json",
+    "start": "npx ganache"
   },
   "author": "",
   "license": "ISC",
